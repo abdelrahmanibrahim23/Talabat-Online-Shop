@@ -22,7 +22,7 @@ namespace Talabat.Core.Specification
 
         public string Search
         {
-            get { return search.ToLower(); }
+            get { return search; }
             set { search = value; }
         }
 

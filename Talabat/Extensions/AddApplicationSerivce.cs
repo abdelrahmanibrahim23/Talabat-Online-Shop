@@ -14,6 +14,7 @@ namespace Talabat.Extensions
     {
         public static IServiceCollection AddApplicationService(this IServiceCollection services)
         {
+            services.AddSingleton<IResponceCaching, CachResponse>();
             services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<IOrderService,OrderService>();

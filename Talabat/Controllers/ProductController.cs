@@ -33,9 +33,9 @@ namespace Talabat.Controllers
             _typeRepo = TypeRepo;
             _mapper = mapper;
         }
-        
+        [CachedAttribute(600)]
         [HttpGet]
-        public async Task<ActionResult<Pagination<ProductReturnDTO>>> GettAllProduct([FromQuery]ProductSpecPrams productPrams)
+        public async Task<ActionResult<Pagination<ProductReturnDTO>>> GetAllProduct([FromQuery]ProductSpecPrams productPrams)
         {
             var spec =new ProductWithBrandAndType(productPrams);
             var products =await _product.GetAllSpecAsync(spec);
@@ -44,6 +44,7 @@ namespace Talabat.Controllers
             var count= await _product.GetCountAsync(countSpec);
             return Ok(new Pagination<ProductReturnDTO>(productPrams.PageIndex,productPrams.PageSize,Data,count));
         }
+        [CachedAttribute(600)]
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductReturnDTO>> GetProductById(int id)
 
@@ -54,12 +55,14 @@ namespace Talabat.Controllers
                 return NotFound(new ApiResponse(404));
             return Ok(_mapper.Map<Product, ProductReturnDTO>(products));    
         }
+        [CachedAttribute(600)]
         [HttpGet("brand")]
         public async Task<ActionResult<IReadOnlyList<ProductBreand>>> GetProductBrand()
         {
             var brand = await _brandRepo.GetAllAsync();
             return Ok(brand);
         }
+        [CachedAttribute(600)]
         [HttpGet("types")]
         public async Task<ActionResult<IReadOnlyList<ProductType>>> GetAllProductType()
         {
